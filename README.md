@@ -12,4 +12,5 @@
 > alt + ins 生成get/set代码  
 > ctrl + alt + v 生成对象   
 > shift + shift 全部搜索  
->Ctrl + alt + l 格式化代码
+>Ctrl + alt + l 格式化代码  
+>ctrl + e 切换窗口
