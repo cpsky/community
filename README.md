@@ -17,7 +17,8 @@
 >ctrl + d 复制所选内容  
 >ctrl + alt + o 移除多余引入  
 >ctrl + f4 关闭当前窗口
->ctrl + p 查看提示参数
+>ctrl + p 查看提示参数  
+>ctrl + d 拷贝
 ### 4. cookie session
 * session在服务器上存在
 * cookie浏览器存在

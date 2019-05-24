@@ -11,7 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper
 public interface UserMapper {
-    @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified) values (#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified})")
+
+
+    @Select("select * from user where id = #{id}")
+    User findById(@Param("id") Integer creator);
+
+    @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified,avatar_url) values (#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl})")
     void insert(User user);
 
     @Update("update user set name = #{name},token =#{token},gmt_modified = #{gmtModified} where id = #{id}")

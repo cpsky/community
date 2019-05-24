@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml">
 <head>
-    <title>交友社区</title>
+    <title>发布-交友社区</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
@@ -10,8 +10,10 @@
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+
     <link rel="stylesheet" href="css/community.css">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
@@ -31,7 +33,7 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only" href="/">交友社区</span>
+                <span class="sr-only">交友社区</span>
             </button>
             <a class="navbar-brand" href="#">交友社区</a>
         </div>
@@ -46,7 +48,7 @@
                 <li th:if="${session.user != null && session.user_status == 0}">
                     <a href="/publish">发布话题</a>
                 </li>
-                <li class="dropdown" th:if="${session.user != null && session.user_status == 0}">
+                <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false" th:text="${session.user.getName()}"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -55,35 +57,39 @@
                         <li><a href="/exit">退出</a></li>
                     </ul>
                     <!--如果在使用github接口登录不需要添加重定向地址，在github中setting中已经声明过-->
-                <li id="login" th:if="${session.user_status == -1 && session.flag != false }"><a
+                <li id="login" th:if="${session.user == null}"><a
                         href="https://github.com/login/oauth/authorize?client_id=9d63011b7811c6191bcc&scope=user&state=1">登录</a>
                 </li>
                 </li>
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
 </nav>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 A">
-            <h2><span class="glyphicon glyphicon-list" style="color: rgb(128, 128, 128)" aria-hidden="true"></span> 发现
-            </h2>
+            <h2><span class="glyphicon glyphicon-check" style="color: rgb(128, 128, 128)" aria-hidden="true"></span>  发起</h2>
             <hr>
-            <div class="media" th:each="question : ${questions}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
-                    </a>
+            <form action="/publish" method="post">
+                <div class="form-group">
+                    <label for="title">问题标题（简单扼要）</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="问题标题....." th:value="${title}">
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
-                    <!--<span th:text="${question.description}"></span><br>-->
-                    <span class="text-desc"><span th:text="${question.commentCount}"></span>个回复   <span th:text="${question.viewCount}"></span>次浏览  <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span></span>
+                <div class="form-group">
+                    <label for="description">问题补充（必填，参照右侧提示）</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" th:text="${description}"></textarea>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="tag">添加标签：</label>
+                    <input type="text" class="form-control" name="tag" id="tag" th:value="${tag}" placeholder="输入标签，以，号分隔">
+                </div>
+                <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+                <button type="submit" class="btn btn-success btn-publish">发布</button>
+            </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 A">
-            <h3>热门话题</h3>
+            <h3>问题发起补充</h3>
+            选择标签：用，号隔开每个标签
         </div>
     </div>
 </div>
