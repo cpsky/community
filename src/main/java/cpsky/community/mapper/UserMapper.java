@@ -19,8 +19,8 @@ public interface UserMapper {
     @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified,avatar_url) values (#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl})")
     void insert(User user);
 
-    @Update("update user set name = #{name},token =#{token},gmt_modified = #{gmtModified} where id = #{id}")
-    int updateLoginUser(User user);
+    @Update("update user set name = #{name},token =#{token},gmt_modified = #{gmtModified},avatar_url = #{avatarUrl} where id = #{id}")
+    int update(User user);
 
     @Select("select * from user where account_id = #{accountId}")
     User findByAcoountId(@Param("accountId") String accountId);
