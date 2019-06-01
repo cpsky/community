@@ -1,13 +1,16 @@
 package cpsky.community.controller;
 
+import cpsky.community.dto.QuestionDto;
 import cpsky.community.mapper.QuestionMapper;
 import cpsky.community.mapper.UserMapper;
 import cpsky.community.model.Question;
 import cpsky.community.model.User;
+import cpsky.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,6 +25,21 @@ public class PublishController {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Autowired
+    private QuestionService questionService;
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable("id") Integer id,
+                       Model model) {
+        //todo: 增加不同用户无法访问 否则别的用户也可以修改
+        QuestionDto question = questionService.getById(id);
+        model.addAttribute("title", question.getTitle());
+        model.addAttribute("description", question.getDescription());
+        model.addAttribute("tag", question.getTag());
+        model.addAttribute("id", question.getId());
+        return "publish";
+    }
+
     @GetMapping("/publish")
     public String publish() {
         return "publish";
@@ -32,6 +50,7 @@ public class PublishController {
             @RequestParam(value = "title") String title,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "tag") String tag,
+            @RequestParam(value = "id") Integer id,
             HttpServletRequest request,
             Model model) {
         User user = null;
@@ -62,7 +81,8 @@ public class PublishController {
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(System.currentTimeMillis());
-        questionMapper.create(question);
+        question.setId(id);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 }

@@ -25,3 +25,9 @@
 * session在服务器上存在
 * cookie浏览器存在
 * http无状态
+
+### 5.命令
+```bash
+mvn flywat:migrate
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```

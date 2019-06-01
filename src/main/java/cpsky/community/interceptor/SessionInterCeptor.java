@@ -2,6 +2,7 @@ package cpsky.community.interceptor;
 
 import cpsky.community.mapper.UserMapper;
 import cpsky.community.model.User;
+import cpsky.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @Author: sky
@@ -29,10 +31,13 @@ public class SessionInterCeptor implements HandlerInterceptor {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    User user = userMapper.findByToken(token);
-                    System.out.println("登录用户id:" + user.getId());
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
+                    UserExample userExample = new UserExample();
+                    userExample.createCriteria()
+                            .andTokenEqualTo(token);
+                    List<User> userList = userMapper.selectByExample(userExample);
+                    System.out.println("登录用户id:" + userList.get(0).getId());
+                    if (userList.size() != 0) {
+                        request.getSession().setAttribute("user", userList.get(0));
                     }
                     break;
                 }
