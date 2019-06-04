@@ -6,4 +6,5 @@ package cpsky.community.exception;
  */
 public interface  ICustomizErrorCode{
     String getMessage();
+    Integer getCode();
 }

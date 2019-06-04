@@ -65,7 +65,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO listByUserId(Integer userId, Integer page, Integer size) {
+    public PaginationDTO listByUserId(Long userId, Integer page, Integer size) {
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andCreatorEqualTo(userId);
@@ -101,7 +101,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDto getById(Integer id) {
+    public QuestionDto getById(Long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
         if(question == null){
             throw new CustomizeException(CustomizErrorCode.QUESTION_NOT_FOUND);
@@ -140,7 +140,7 @@ public class QuestionService {
         }
     }
     //增加阅读数
-    public void incView(Integer id) {
+    public void incView(Long id) {
         Question question = new Question();
         question.setId(id);
         question.setViewCount(1);

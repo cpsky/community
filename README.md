@@ -21,6 +21,10 @@
 >ctrl + d 拷贝  
 >ctrl + p 查看提示参数  
 >ctrl shift 上下调整
+>alt + f7 查找调用该函数的位置  
+>alt + f12 打开终端  
+> ctrl + f12查找函数  
+> ctrl + f6修改函数参数位置
 ### 4. cookie session
 * session在服务器上存在
 * cookie浏览器存在
@@ -30,4 +34,5 @@
 ```bash
 mvn flywat:migrate
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+taskkill /im java.exe /f
 ```

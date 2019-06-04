@@ -2,7 +2,6 @@ package cpsky.community.controller;
 
 import cpsky.community.dto.QuestionDto;
 import cpsky.community.mapper.QuestionMapper;
-import cpsky.community.mapper.UserMapper;
 import cpsky.community.model.Question;
 import cpsky.community.model.User;
 import cpsky.community.service.QuestionService;
@@ -29,7 +28,7 @@ public class PublishController {
     private QuestionService questionService;
 
     @GetMapping("/publish/{id}")
-    public String edit(@PathVariable("id") Integer id,
+    public String edit(@PathVariable("id") Long id,
                        Model model) {
         //todo: 增加不同用户无法访问 否则别的用户也可以修改
         QuestionDto question = questionService.getById(id);
@@ -50,7 +49,7 @@ public class PublishController {
             @RequestParam(value = "title") String title,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "tag") String tag,
-            @RequestParam(value = "id") Integer id,
+            @RequestParam(value = "id") Long id,
             HttpServletRequest request,
             Model model) {
         User user = null;

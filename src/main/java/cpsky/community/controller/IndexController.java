@@ -1,9 +1,8 @@
 package cpsky.community.controller;
 
-import cpsky.community.service.QuestionService;
 import cpsky.community.dto.PaginationDTO;
 import cpsky.community.mapper.UserMapper;
-import cpsky.community.model.User;
+import cpsky.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

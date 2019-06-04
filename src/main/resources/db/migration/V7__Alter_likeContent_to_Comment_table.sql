@@ -1,0 +1,1 @@
+alter table comment modify like_count bigint default 0 null comment '点赞数';
