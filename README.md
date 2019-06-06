@@ -24,7 +24,9 @@
 >alt + f7 查找调用该函数的位置  
 >alt + f12 打开终端  
 > ctrl + f12查找函数  
-> ctrl + f6修改函数参数位置
+> ctrl + f6修改函数参数位置  
+> ctrl + alt +b 查看接口所有实现类  
+>ctrl + alt +方向键 切换标签
 ### 4. cookie session
 * session在服务器上存在
 * cookie浏览器存在

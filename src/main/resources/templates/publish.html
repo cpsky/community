@@ -17,17 +17,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <script>
-        function isCookie() {
-            //判断是否允许cookie，如果不允许则隐藏登录标签
-            var flag = navigator.cookieEnabled;
-            if (flag == false) {
-                document.getElementById("login").style.visibility = "hidden"
-            }
-        }
-    </script>
 </head>
-<body onload="isCookie()">
+<body>
 <div th:insert="navigation :: nav"></div>
 <div class="container-fluid main">
     <div class="row">
