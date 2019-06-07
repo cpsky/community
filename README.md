@@ -36,7 +36,7 @@
 
 ### 5.命令
 ```bash
-mvn flywat:migrate
+mvn flyway:migrate
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 taskkill /im java.exe /f
 ```
