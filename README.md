@@ -10,7 +10,9 @@
 > alt + 1展开目录  
 >shift + f12 全屏代码
 > alt + ins 生成get/set代码  
-> ctrl + alt + v 生成对象   
+> ctrl + alt + v 抽变量  
+> ctrl + alt + m 抽方法  
+> ctrl + alt + p 抽参数   
 > shift + shift 全部搜索  
 >Ctrl + alt + l 格式化代码  
 >ctrl + e 切换窗口  

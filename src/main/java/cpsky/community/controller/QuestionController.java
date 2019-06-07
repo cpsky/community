@@ -1,8 +1,8 @@
 package cpsky.community.controller;
 
-import cpsky.community.dto.CommentCreateDto;
 import cpsky.community.dto.CommentDto;
 import cpsky.community.dto.QuestionDto;
+import cpsky.community.enums.CommentTypeEnum;
 import cpsky.community.service.CommentService;
 import cpsky.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class QuestionController {
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Long id, Model model) {
         QuestionDto questionDto = questionService.getById(id);
-        List<CommentDto> comments = commentService.listByQuestionId(id);
+        List<CommentDto> comments = commentService.listByTargetId(id, CommentTypeEnum.Question);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question", questionDto);

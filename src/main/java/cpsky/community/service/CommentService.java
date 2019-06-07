@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -68,22 +67,23 @@ public class CommentService {
             questionExtMapper.incCommentCount(question);
         }
     }
-
-    public List<CommentDto> listByQuestionId(Long id) {
+    //获取问题或者评论的评论
+    public List<CommentDto> listByTargetId(Long id, CommentTypeEnum type) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
-                .andTypeEqualTo(CommentTypeEnum.Question.getType());
+                .andTypeEqualTo(type.getType());
+        commentExample.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
 
         if (comments.size() == 0) {
             return new ArrayList<>();
         }
-        //获取蛆虫和的评论人
+        //获取评论人
         Set<Long> commentators = comments.stream().map(comment -> comment.getCommentator()).collect(Collectors.toSet());
         List<Long> userIds = new ArrayList();
         userIds.addAll(commentators);
-        //根据评论人获取用户 冰转换为map
+        //根据评论人获取用户 转换为map
         UserExample userExample = new UserExample();
         userExample.createCriteria()
                 .andIdIn(userIds);
