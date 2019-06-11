@@ -4,10 +4,7 @@ import cpsky.community.dto.CommentDto;
 import cpsky.community.enums.CommentTypeEnum;
 import cpsky.community.exception.CustomizErrorCode;
 import cpsky.community.exception.CustomizeException;
-import cpsky.community.mapper.CommentMapper;
-import cpsky.community.mapper.QuestionExtMapper;
-import cpsky.community.mapper.QuestionMapper;
-import cpsky.community.mapper.UserMapper;
+import cpsky.community.mapper.*;
 import cpsky.community.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +36,9 @@ public class CommentService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private CommentExtMapper commentExtMapper;
+
     //添加事务
     @Transactional
     public void insert(Comment comment) {
@@ -55,6 +55,11 @@ public class CommentService {
                 throw new CustomizeException(CustomizErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            //增加评论数（父级）
+            Comment parentComment = new Comment();
+            parentComment.setId(comment.getParentId());
+            parentComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(parentComment);
         } else {
             // 回复问题
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());

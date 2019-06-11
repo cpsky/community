@@ -70,6 +70,14 @@ body {
 .menu .icon:hover{
     color: #499ef3
 }
+.menu .comment-icon {
+     font-size: 15px;
+     cursor: pointer;
+    color: #999999;
+ }
+.menu .comment-icon:hover{
+    color: #499ef3
+}
 .comment-time {
     color: #999999;
 }

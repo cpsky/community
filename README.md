@@ -28,7 +28,8 @@
 > ctrl + f12查找函数  
 > ctrl + f6修改函数参数位置  
 > ctrl + alt +b 查看接口所有实现类  
->ctrl + alt +方向键 切换标签
+>ctrl + alt +方向键 切换标签  
+> ctrl + alt + n inline
 ### 4. cookie session
 * session在服务器上存在
 * cookie浏览器存在
