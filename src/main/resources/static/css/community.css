@@ -31,6 +31,11 @@ body {
     margin-top: 15px;
 }
 
+.question-tag {
+    font-size: 15px;
+    margin-right: 5px;
+}
+
 .question-title {
     margin-top: 25px;
 }
@@ -95,4 +100,14 @@ body {
 }
 .sub-comments .btn{
     margin: 10px 0;
+}
+.question-related {
+    line-height: 20px;
+    font-size: 14px;
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.my-header{
+    width: 50%;
 }
