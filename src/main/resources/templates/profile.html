@@ -38,6 +38,11 @@
                     <span class="text-desc"><span th:text="${question.commentCount}"></span>个回复   <span
                             th:text="${question.viewCount}"></span>次浏览  <span
                             th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span></span>
+                    <a th:href="@{'/publish/' + ${question.id}}" class="community-menu-modify"
+                       th:if="${session.user != null && session.user.id == question.creator}">
+                        <span class="glyphicon glyphicon-pencil" style="color: rgb(128, 128, 128)"></span>
+                        编辑
+                    </a>
                 </div>
             </div>
             <nav th:if="${pagination.totalPage != 0}" aria-label="Page navigation">

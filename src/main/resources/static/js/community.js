@@ -87,7 +87,7 @@ function collapseComments(e) {
 
                     var mediaElement = $("<div/>", {
                         "class": "media",
-                    }).append(mediaLeftElement) .append(mediaBodyElement);
+                    }).append(mediaLeftElement).append(mediaBodyElement);
                     var commentElement = $("<div/>", {
                         "class": "col-lg-12 col-md-12 col-sm-12 comments",
                     }).append(mediaElement);
@@ -100,4 +100,20 @@ function collapseComments(e) {
         }
 
     }
+}
+
+function selectTag(e) {
+    var value = e.getAttribute("data-tag")
+    var previous = $("#tag").val();
+    if (previous.indexOf(value) == -1) {
+        if (previous) {
+            $("#tag").val(previous + ',' + value);
+        } else {
+            $("#tag").val(value);
+        }
+    }
+}
+
+function showSelectTag() {
+    $("#select-tag").show();
 }

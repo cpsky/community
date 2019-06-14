@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>发布-交友社区</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -17,27 +17,53 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+    <script src="/js/community.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="navigation :: nav"></div>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 A">
-            <h2><span class="glyphicon glyphicon-check" style="color: rgb(128, 128, 128)" aria-hidden="true"></span>  发起</h2>
+            <h2><span class="glyphicon glyphicon-check" style="color: rgb(128, 128, 128)" aria-hidden="true"></span> 发起
+            </h2>
             <hr>
             <form action="/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="问题标题....." th:value="${title}">
+                    <input type="text" class="form-control" name="title" id="title" placeholder="问题标题....."
+                           autocomplete="off" th:value="${title}">
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充（必填，参照右侧提示）</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" th:text="${description}"></textarea>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"
+                              th:text="${description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
-                    <input type="text" class="form-control" name="tag" id="tag" th:value="${tag}" placeholder="输入标签，以，号分隔">
+                    <input type="text" class="form-control" name="tag" id="tag" th:value="${tag}"
+                           autocomplete="off"
+                           placeholder="输入标签，以，号分隔" onclick="showSelectTag()">
+                    <div id="select-tag" class="question-tag publish-tag-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="selectCategory, selectCategoryStat :${tags}"
+                                th:class="${selectCategoryStat.first? 'active' : ''}">
+                                <a th:href="${'#' + selectCategory.getCategoryName()}" aria-controls="home" role="tab"
+                                   data-toggle="tab" th:text="${selectCategory.categoryName}"></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel"  th:id="${selectCategory.categoryName}"
+                                 th:each="selectCategory : ${tags}"
+                                 th:class="${selectCategoryStat.first? 'active tab-pane' : 'tab-pane'}">
+                                    <span class="label label-info question-tag"
+                                          th:each="selectTag : ${selectCategory.tags}">
+                                        <span class="glyphicon glyphicon-tags" onclick="selectTag(this)"
+                                              th:data-tag="${selectTag}" th:text="${' ' + selectTag}"></span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
                 <button type="submit" class="btn btn-success btn-publish">发布</button>
