@@ -2,6 +2,8 @@ package cpsky.community.service;
 
 import cpsky.community.dto.CommentDto;
 import cpsky.community.enums.CommentTypeEnum;
+import cpsky.community.enums.NotificationStatusEnum;
+import cpsky.community.enums.NotificationTypeEnum;
 import cpsky.community.exception.CustomizErrorCode;
 import cpsky.community.exception.CustomizeException;
 import cpsky.community.mapper.*;
@@ -39,9 +41,12 @@ public class CommentService {
     @Autowired
     private CommentExtMapper commentExtMapper;
 
+    @Autowired
+    private NotificationMapper notificationMapper;
+
     //添加事务
     @Transactional
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User commentator) {
         if (comment.getParentId() == null || comment.getParentId() <= 0) {
             throw new CustomizeException(CustomizErrorCode.TARGET_NOT_FOUND);
         }
@@ -55,11 +60,20 @@ public class CommentService {
                 throw new CustomizeException(CustomizErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            //回复问题
+            Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
+            if (question == null) {
+                throw new CustomizeException(CustomizErrorCode.QUESTION_NOT_FOUND);
+            }
+
             //增加评论数（父级）
             Comment parentComment = new Comment();
             parentComment.setId(comment.getParentId());
             parentComment.setCommentCount(1);
             commentExtMapper.incCommentCount(parentComment);
+
+            //通知
+            createNotify(comment, dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_COMMENT,question.getId());
         } else {
             // 回复问题
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
@@ -70,8 +84,25 @@ public class CommentService {
             //两条语句应当同时执行或者全部不执行
             commentMapper.insert(comment);
             questionExtMapper.incCommentCount(question);
+
+            createNotify(comment, question.getCreator(), commentator.getName(), question.getTitle(),NotificationTypeEnum.REPLY_QUESTION, question.getId());
         }
     }
+
+    private void createNotify(Comment comment, Long receiver, String notifierName, String notifyTitle, NotificationTypeEnum notificationType, Long outerId) {
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setType(notificationType.getType());
+        notification.setOuterid(outerId);
+        notification.setNotifier(comment.getCommentator());
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        notification.setReceiver(receiver);
+        notification.setNotifierName(notifierName);
+        notification.setOuterTitle(notifyTitle);
+        notificationMapper.insert(notification);
+    }
+
+
     //获取问题或者评论的评论
     public List<CommentDto> listByTargetId(Long id, CommentTypeEnum type) {
         CommentExample commentExample = new CommentExample();

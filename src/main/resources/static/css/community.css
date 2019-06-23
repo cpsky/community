@@ -34,6 +34,7 @@ body {
 .question-tag {
     font-size: 15px;
     margin-top: 5px;
+    margin-right: 5px;
 }
 .publish-tag-tab {
     display: none;

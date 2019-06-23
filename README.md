@@ -29,7 +29,9 @@
 > ctrl + f6修改函数参数位置  
 > ctrl + alt +b 查看接口所有实现类  
 >ctrl + alt +方向键 切换标签  
-> ctrl + alt + n inline
+> ctrl + alt + n inline  
+> ctrl + alt + m 重构所选代码块
+> ctrl + alt + p 根据所选内容重构函数参数
 ### 4. cookie session
 * session在服务器上存在
 * cookie浏览器存在
@@ -38,6 +40,6 @@
 ### 5.命令
 ```bash
 mvn flyway:migrate
-1
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 taskkill /im java.exe /f
 ```

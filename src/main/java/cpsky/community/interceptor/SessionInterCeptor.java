@@ -3,6 +3,7 @@ package cpsky.community.interceptor;
 import cpsky.community.mapper.UserMapper;
 import cpsky.community.model.User;
 import cpsky.community.model.UserExample;
+import cpsky.community.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,6 +24,9 @@ public class SessionInterCeptor implements HandlerInterceptor {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    NotificationService notificationService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
@@ -37,6 +41,8 @@ public class SessionInterCeptor implements HandlerInterceptor {
                     System.out.println("登录用户id:" + userList.get(0).getId());
                     if (userList.size() != 0) {
                         request.getSession().setAttribute("user", userList.get(0));
+                        Long unreadCount = notificationService.unreadCount(userList.get(0).getId());
+                        request.getSession().setAttribute("unreadCount", unreadCount);
                     }
                     break;
                 }

@@ -63,7 +63,7 @@ public class QuestionService {
             questionDto.setUser(user);
             questionDtoList.add(questionDto);
         }
-        paginationDTO.setQuestions(questionDtoList);
+        paginationDTO.setData(questionDtoList);
         paginationDTO.setPagination(count, page, size);
         return paginationDTO;
     }
@@ -98,7 +98,7 @@ public class QuestionService {
             questionDto.setUser(user);
             questionDtoList.add(questionDto);
         }
-        paginationDTO.setQuestions(questionDtoList);
+        paginationDTO.setData(questionDtoList);
         Integer totalCount = (int)questionMapper.countByExample(example);
         paginationDTO.setPagination(totalCount, page, size);
         return paginationDTO;
