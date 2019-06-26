@@ -12,12 +12,14 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/editormd.min.css" />
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
     <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="navigation :: nav"></div>
@@ -34,11 +36,23 @@
                     <input type="text" class="form-control" name="title" id="title" placeholder="问题标题....."
                            autocomplete="off" th:value="${title}">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="question-editor">
                     <label for="description">问题补充（必填，参照右侧提示）</label>
                     <textarea name="description" id="description" class="form-control" cols="30" rows="10"
-                              th:text="${description}"></textarea>
+                              th:text="${description}" style="display:none;"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function() {
+                        var editor = editormd("question-editor", {
+                            width  : "100%",
+                            height : 350,
+                            path   : "/js/lib/",
+                            delay: 0,
+                            watch: false,
+                            placeholder: "请输入问题描述："
+                        });
+                    });
+                </script>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
                     <input type="text" class="form-control" name="tag" id="tag" th:value="${tag}"

@@ -12,11 +12,16 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/editormd.preview.min.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
     <script src="/js/moment.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
 
 </head>
 <body>
@@ -37,9 +42,15 @@
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                 <!--   内容-->
-
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${question.description}">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
+                    <textarea style="display:none;" th:text="${question.description}"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function() {
+                        var testView = editormd.markdownToHTML("question-view", {});
+
+                    });
+                </script>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!--标签-->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -166,7 +177,7 @@
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>我的好看的头像</h4>
-                <img class="img-thumbnail my-header" src="/img/header.jpg">
+                <img class="img-thumbnail my-header" src="/images/header.jpg">
             </div>
             <!--相关问题-->
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
