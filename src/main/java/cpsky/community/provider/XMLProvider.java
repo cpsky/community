@@ -1,24 +1,25 @@
-package cpsky.community.community;
+package cpsky.community.provider;
 
 import cpsky.community.dto.KeyDto;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.Iterator;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class CommunityApplicationTests {
-
-    @Test
-    public void contextLoads() {
+/**
+ * \* Author: sky
+ * \* Date: 2019/7/2
+ * \* Description:
+ * \
+ */
+@Component
+public class XMLProvider {
+    public KeyDto getUpLoadKey() {
+        KeyDto keyDto = new KeyDto();
         try {
             File f = new File("d:/key.xml");
             SAXReader reader = new SAXReader();
@@ -38,14 +39,12 @@ public class CommunityApplicationTests {
                     break;
                 }
             }
-            KeyDto keyDto = new KeyDto();
             keyDto.setKeyid(gg.element("keyid").getText());
             keyDto.setKeysecert(gg.element("keysecret").getText());
             System.out.println(keyDto.getKeysecert());
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-
+        return keyDto;
     }
-
 }

@@ -31,7 +31,8 @@
 >ctrl + alt +方向键 切换标签  
 > ctrl + alt + n inline  
 > ctrl + alt + m 重构所选代码块
-> ctrl + alt + p 根据所选内容重构函数参数
+> ctrl + alt + p 根据所选内容重构函数参数  
+> ctrl + alt + f 生成属性
 ### 4. cookie session
 * session在服务器上存在
 * cookie浏览器存在
