@@ -59,6 +59,7 @@ public class CommentService {
             if (dbComment == null) {
                 throw new CustomizeException(CustomizErrorCode.COMMENT_NOT_FOUND);
             }
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             //回复问题
             Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
@@ -80,7 +81,8 @@ public class CommentService {
             if (question == null) {
                 throw new CustomizeException(CustomizErrorCode.QUESTION_NOT_FOUND);
             }
-            question.setCommentCount(1);
+            question.setCommentCount(0);
+            comment.setCommentCount(0);
             //两条语句应当同时执行或者全部不执行
             commentMapper.insert(comment);
             questionExtMapper.incCommentCount(question);
@@ -90,6 +92,9 @@ public class CommentService {
     }
 
     private void createNotify(Comment comment, Long receiver, String notifierName, String notifyTitle, NotificationTypeEnum notificationType, Long outerId) {
+        if(receiver == comment.getCommentator()) {
+            return;
+        }
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationType.getType());

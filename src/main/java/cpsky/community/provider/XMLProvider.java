@@ -41,7 +41,6 @@ public class XMLProvider {
             }
             keyDto.setKeyid(gg.element("keyid").getText());
             keyDto.setKeysecert(gg.element("keysecret").getText());
-            System.out.println(keyDto.getKeysecert());
         } catch (DocumentException e) {
             e.printStackTrace();
         }
