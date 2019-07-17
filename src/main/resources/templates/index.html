@@ -63,32 +63,33 @@
                         </a>
                     </li>
                     <li th:if="${pageination.showPrevious}">
-                        <a th:href="@{/(page=${pageination.page - 1})}" aria-label="Previous">
+                        <a th:href="@{/(page=${pageination.page - 1},search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page : ${pageination.pages}" th:class="${pageination.page == page}? 'active' : ''">
-                        <a  th:href="@{/(page=${page})}" th:text="${page}">
+                        <a  th:href="@{/(page=${page},search=${search})}" th:text="${page}">
 
                         </a>
                     </li>
                     <li>
-                        <a th:href="@{/(page=${pageination.page + 1})}" th:if="${pageination.showNext}" aria-label="Next">
+                        <a th:href="@{/(page=${pageination.page + 1},search=${search})}" th:if="${pageination.showNext}" aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li>
-                        <a th:href="@{/(page=${pageination.totalPage})}" th:if="${pageination.showEndPage}" aria-label="Next">
+                        <a th:href="@{/(page=${pageination.totalPage},search=${search})}" th:if="${pageination.showEndPage}" aria-label="Next">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
                 </ul>
             </nav>
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 A">
-            <h3>热门话题</h3>
+        <div class="col-lg-3 col-md-12 col-sm-12">
+            <h3>站长博客</h3><img class="img-thumbnail " src="/images/defaultavatar.png">
         </div>
     </div>
 </div>
+<div th:insert="footer :: foot"></div>
 </body>
 </html>

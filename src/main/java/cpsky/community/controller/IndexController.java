@@ -24,7 +24,8 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "7") Integer size
+                        @RequestParam(name = "size", defaultValue = "7") Integer size,
+                        @RequestParam(name = "search", required = false) String search
     ) {
         //判断浏览器是否禁用cookie
         //如果禁用cookie,会把jsessionid写在响应头中的set-cookie中
@@ -48,8 +49,9 @@ public class IndexController {
                     request.getSession().setAttribute("user_status", -1);
                 }
             }*/
-        PaginationDTO pagination = questionService.list(page, size);
+        PaginationDTO pagination = questionService.list(search, page, size);
         model.addAttribute("pageination", pagination);
+        model.addAttribute("search", search);
         return "index";
     }
 

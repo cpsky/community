@@ -1,5 +1,6 @@
 package cpsky.community.service;
 
+import cpsky.community.dto.QuestionQueryDto;
 import cpsky.community.exception.CustomizErrorCode;
 import cpsky.community.exception.CustomizeException;
 import cpsky.community.dto.PaginationDTO;
@@ -37,12 +38,20 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
+    public PaginationDTO list(String search, Integer page, Integer size) {
+        if (StringUtils.isNotBlank(search) ){
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        } else {
+            search = null;
+        }
+
         if (page < 1) {
             page = 1;
         }
-        QuestionExample example = new QuestionExample();
-        Integer count = (int)questionMapper.countByExample(example);
+        QuestionQueryDto questionQueryDto = new QuestionQueryDto();
+        questionQueryDto.setSearch(search);
+        Integer count = questionExtMapper.countBySearch(questionQueryDto);
         if (page > count) {
             if(count % size == 0)
             page = count / size;
@@ -54,7 +63,9 @@ public class QuestionService {
         PaginationDTO paginationDTO = new PaginationDTO();
         QuestionExample questionExample = new QuestionExample();
         questionExample.setOrderByClause("GMT_MODIFIED DESC");
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
+        questionQueryDto.setSize(size);
+        questionQueryDto.setPage(offset);
+        List<Question> questions = questionExtMapper.selectBySearch(questionQueryDto);
         List<QuestionDto> questionDtoList = new ArrayList<>();
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());

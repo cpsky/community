@@ -38,7 +38,7 @@ public class SessionInterCeptor implements HandlerInterceptor {
                     userExample.createCriteria()
                             .andTokenEqualTo(token);
                     List<User> userList = userMapper.selectByExample(userExample);
-                    System.out.println("登录用户id:" + userList.get(0).getId());
+                    //System.out.println("登录用户id:" + userList.get(0).getId());
                     if (userList.size() != 0) {
                         request.getSession().setAttribute("user", userList.get(0));
                         Long unreadCount = notificationService.unreadCount(userList.get(0).getId());

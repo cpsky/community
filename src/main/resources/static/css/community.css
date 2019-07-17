@@ -125,3 +125,7 @@ body {
 .my-header{
     width: 50%;
 }
+.footer {
+    padding: 10px 30%;
+    color: #666666;
+}

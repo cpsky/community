@@ -1,5 +1,6 @@
 package cpsky.community.mapper;
 
+import cpsky.community.dto.QuestionQueryDto;
 import cpsky.community.model.Question;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,12 @@ import java.util.List;
 @Component
 public interface QuestionExtMapper {
     int incView(Question record);
+
     int incCommentCount(Question record);
+
     List<Question> selectRelated(Question question);
+
+    Integer countBySearch(QuestionQueryDto questionQueryDto);
+
+    List<Question> selectBySearch(QuestionQueryDto questionQueryDto);
 }
