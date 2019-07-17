@@ -6,6 +6,7 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.PutObjectResult;
 import cpsky.community.dto.KeyDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -20,16 +21,19 @@ import java.util.Date;
  */
 @Component
 public class AliCloudProvider {
+    @Value("${alicloud.oss.keyid}")
+    private String keyId;
 
-    @Autowired
-    private XMLProvider xmlProvider;
-
+    @Value("${alicloud.oss.keysecret}")
+    private String keySecret;
     public String upload(InputStream inputStream, String fileName) {
         URL url = null;
         try {
             String resFilename;
             resFilename = "community/" + fileName;
-            KeyDto keyDto = xmlProvider.getUpLoadKey();
+            KeyDto keyDto = new KeyDto();
+            keyDto.setKeysecert(keySecret);
+            keyDto.setKeyid(keyId);
             String endpoint = "http://oss-cn-beijing.aliyuncs.com";
             String accessKeyId = keyDto.getKeyid();
             String accessKeySecret = keyDto.getKeysecert();

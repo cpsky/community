@@ -1,19 +1,16 @@
 package cpsky.community.service;
 
-import com.sun.javaws.exceptions.ErrorCodeResponseException;
 import cpsky.community.dto.NotificationDto;
 import cpsky.community.dto.PaginationDTO;
 import cpsky.community.enums.NotificationStatusEnum;
 import cpsky.community.enums.NotificationTypeEnum;
 import cpsky.community.exception.CustomizErrorCode;
 import cpsky.community.exception.CustomizeException;
-import cpsky.community.exception.ICustomizErrorCode;
 import cpsky.community.mapper.NotificationMapper;
 import cpsky.community.mapper.UserMapper;
 import cpsky.community.model.Notification;
 import cpsky.community.model.NotificationExample;
 import cpsky.community.model.User;
-import cpsky.community.model.UserExample;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * \* Author: sky
