@@ -61,7 +61,7 @@ public class CommentService {
             }
             comment.setCommentCount(0);
             commentMapper.insert(comment);
-            //回复问题
+            //回复评论
             Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
             if (question == null) {
                 throw new CustomizeException(CustomizErrorCode.QUESTION_NOT_FOUND);
@@ -81,7 +81,7 @@ public class CommentService {
             if (question == null) {
                 throw new CustomizeException(CustomizErrorCode.QUESTION_NOT_FOUND);
             }
-            question.setCommentCount(0);
+            question.setCommentCount(1);
             comment.setCommentCount(0);
             //两条语句应当同时执行或者全部不执行
             commentMapper.insert(comment);
