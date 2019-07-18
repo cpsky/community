@@ -61,7 +61,7 @@ public class CommentService {
             }
             comment.setCommentCount(0);
             commentMapper.insert(comment);
-            //回复评论
+            //回复问题
             Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
             if (question == null) {
                 throw new CustomizeException(CustomizErrorCode.QUESTION_NOT_FOUND);
@@ -72,7 +72,8 @@ public class CommentService {
             parentComment.setId(comment.getParentId());
             parentComment.setCommentCount(1);
             commentExtMapper.incCommentCount(parentComment);
-
+            question.setCommentCount(1);
+            questionExtMapper.incCommentCount(question);
             //通知
             createNotify(comment, dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_COMMENT,question.getId());
         } else {
