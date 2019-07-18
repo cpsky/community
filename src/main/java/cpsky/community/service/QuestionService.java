@@ -59,7 +59,7 @@ public class QuestionService {
                 page = count / size + 1;
             }
         }
-        Integer offset = page < 1 ? 0 : size * (page - 1);
+        Integer offset = (page < 1) ? 0 : size * (page - 1);
         PaginationDTO paginationDTO = new PaginationDTO();
         QuestionExample questionExample = new QuestionExample();
         questionExample.setOrderByClause("GMT_MODIFIED DESC");
